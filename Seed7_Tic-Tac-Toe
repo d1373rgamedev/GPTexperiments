@@ -1,0 +1,110 @@
+$ include "seed7_05.s7i";
+
+const func string: boardToStr(array[3,3] of char: board) is func
+begin
+  result := "";
+  var integer: i;
+  var integer: j;
+
+  for i range 1 to 3 do
+    for j range 1 to 3 do
+      result +:= " " + board[i, j] + " ";
+      if j < 3 then
+        result +:= "|";
+      end if;
+    end for;
+    if i < 3 then
+      result +:= "\n---+---+---\n";
+    end if;
+  end for;
+end func;
+
+const func void: printBoard(array[3,3] of char: board) is func
+begin
+  writeln(boardToStr(board));
+end func;
+
+const func boolean: isWinningMove(array[3,3] of char: board, char: player) is func
+begin
+  result := false;
+  
+  # Check rows
+  for var integer: i range 1 to 3 do
+    if board[i,1] = player and board[i,2] = player and board[i,3] = player then
+      result := true;
+      return;
+    end if;
+  end for;
+
+  # Check columns
+  for var integer: j range 1 to 3 do
+    if board[1,j] = player and board[2,j] = player and board[3,j] = player then
+      result := true;
+      return;
+    end if;
+  end for;
+
+  # Check diagonals
+  if (board[1,1] = player and board[2,2] = player and board[3,3] = player) or
+     (board[1,3] = player and board[2,2] = player and board[3,1] = player) then
+    result := true;
+  end if;
+end func;
+
+const func boolean: isDraw(array[3,3] of char: board) is func
+begin
+  result := true;
+  for var integer: i range 1 to 3 do
+    for var integer: j range 1 to 3 do
+      if board[i, j] = ' ' then
+        result := false;
+        return;
+      end if;
+    end for;
+  end for;
+end func;
+
+const func boolean: isValidMove(array[3,3] of char: board, integer: row, integer: col) is func
+begin
+  result := (row >= 1 and row <= 3 and col >= 1 and col <= 3 and board[row, col] = ' ');
+end func;
+
+const proc: playGame is func
+begin
+  var array[3,3] of char: board is [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
+  var char: currentPlayer is 'X';
+  var integer: row;
+  var integer: col;
+  var boolean: gameWon is false;
+
+  repeat
+    printBoard(board);
+    writeln("Player ", currentPlayer, ", enter your move (row and column): ");
+    row := getln().getInt();
+    col := getln().getInt();
+
+    if isValidMove(board, row, col) then
+      board[row, col] := currentPlayer;
+
+      if isWinningMove(board, currentPlayer) then
+        printBoard(board);
+        writeln("Player ", currentPlayer, " wins!");
+        gameWon := true;
+      elsif isDraw(board) then
+        printBoard(board);
+        writeln("It's a draw!");
+        gameWon := true;
+      else
+        currentPlayer := (if currentPlayer = 'X' then 'O' else 'X');
+      end if;
+    else
+      writeln("Invalid move. Try again.");
+    end if;
+  until gameWon;
+end proc;
+
+const proc: main is func
+begin
+  writeln("Welcome to Tic-Tac-Toe!");
+  playGame();
+end proc;
