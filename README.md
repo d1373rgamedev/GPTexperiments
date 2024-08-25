@@ -1,9 +1,11 @@
 # GPTexperiments
 
-Seed7_Tic-Tac-Toe
+## Seed7_Tic-Tac-Toe
 
 with ChatGPT-4o
+
 Prompt: write a Tic-Tac-Toe Game in Seed7
+
 ChatGPT: Here's a simple implementation of a Tic-Tac-Toe game in Seed7
 
 ### Erklärung:
