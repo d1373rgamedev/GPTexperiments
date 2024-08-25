@@ -1,3 +1,5 @@
+# Software Development Lifecycle (SDLC)
+
 Der Software Development Lifecycle (SDLC) ist ein strukturiertes Vorgehensmodell, das den Prozess der Softwareentwicklung in verschiedene Phasen unterteilt. Diese Phasen helfen, die Entwicklung effizient und effektiv zu steuern. Die klassischen Phasen des SDLC sind:
 
 1. **Planung (Planning):**
